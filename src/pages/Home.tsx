@@ -19,7 +19,7 @@ interface SkillData {
 export function Home() {
   const [newSkill, setNewSkill] = useState("");
   const [mySkills, setMySkills] = useState<SkillData[]>([]);
-  const [greeting, setGretting] = useState("");
+  const [greeting, setGreeting] = useState("");
 
   function handleAddNewSkill() {
     const data = {
@@ -38,38 +38,45 @@ export function Home() {
     const currentHour = new Date().getHours();
 
     if (currentHour < 12) {
-      setGretting("Good morning");
+      setGreeting("Good morning");
     } else if (currentHour >= 12 && currentHour < 18) {
-      setGretting("Good afternoon");
+      setGreeting("Good afternoon");
     } else {
-      setGretting("Good night");
+      setGreeting("Good night");
     }
   }, []);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome, Flávio</Text>
+      <Text style={styles.title} testID="welcome">
+        Welcome, Flávio
+      </Text>
       <Text style={styles.greetings}>{greeting}</Text>
 
       <TextInput
+        testID="input-new"
         style={styles.input}
         placeholder="New skill"
         placeholderTextColor="#555"
         onChangeText={setNewSkill}
       />
-      <Button title="Add" onPress={handleAddNewSkill} />
+      <Button testID="button-add" title="Add" onPress={handleAddNewSkill} />
 
       <Text style={[styles.title, { marginVertical: 50 }]}>My Skills</Text>
-      <FlatList
-        data={mySkills}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <SkillCard
-            skill={item.name}
-            onPress={() => handleRemoveSkill(item.id)}
-          />
-        )}
-      />
+      {mySkills && (
+        <FlatList
+          testID="flat-list-skills"
+          data={mySkills}
+          keyExtractor={(item) => item.id}
+          keyboardShouldPersistTaps="never"
+          renderItem={({ item }) => (
+            <SkillCard
+              skill={item.name}
+              onPress={() => handleRemoveSkill(item.id)}
+            />
+          )}
+        />
+      )}
     </View>
   );
 }
