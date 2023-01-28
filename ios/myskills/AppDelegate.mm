@@ -4,9 +4,10 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 
+#import <RNSplashScreen.h>
+
 #import <React/RCTAppSetupUtils.h>
 
-#import "RNSplashScreen.h"
 
 #if RCT_NEW_ARCH_ENABLED
 #import <React/CoreModulesPlugins.h>
